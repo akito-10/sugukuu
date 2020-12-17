@@ -12,9 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       flexGrow: 1,
     },
-    appBar: {
-      backgroundColor: "#ee7800",
-    },
+    appBar: { backgroundColor: "#ee7800" },
     searchButton: {},
     menuButton: {
       marginLeft: theme.spacing(2),
@@ -25,7 +23,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const AppHeader: React.FC = () => {
+type PROPS = {
+  handleDrawerOpen: () => void;
+};
+
+const AppHeader: React.FC<PROPS> = (props) => {
   const classes = useStyles();
 
   return (
@@ -49,6 +51,7 @@ const AppHeader: React.FC = () => {
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
+            onClick={props.handleDrawerOpen}
           >
             <MenuIcon />
           </IconButton>
