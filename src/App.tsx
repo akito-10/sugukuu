@@ -3,6 +3,7 @@ import "./App.css";
 import { createStyles, makeStyles } from "@material-ui/core";
 import AppHeader from "./components/AppHeader";
 import NavDrawer from "./components/NavDrawer";
+import ShopCard from "./components/ShopCard";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -41,10 +42,13 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <header className={classes.header}>
-        <AppHeader handleDrawerOpen={handleDrawerOpen} />
+        <AppHeader
+          handleDrawerOpen={handleDrawerOpen}
+          getCurrentPosition={getCurrentPosition}
+        />
       </header>
       <main>
-        <p onClick={getCurrentPosition}>api</p>
+        <ShopCard />
       </main>
       <nav>
         <NavDrawer open={open} handleDrawerClose={handleDrawerClose} />

@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type PROPS = {
   handleDrawerOpen: () => void;
+  getCurrentPosition: () => void;
 };
 
 const AppHeader: React.FC<PROPS> = (props) => {
@@ -39,6 +40,7 @@ const AppHeader: React.FC<PROPS> = (props) => {
             className={classes.searchButton}
             color="inherit"
             aria-label="menu"
+            onClick={props.getCurrentPosition}
           >
             <SearchIcon />
             <Typography variant="body1">探す！</Typography>
