@@ -66,12 +66,12 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type PROPS = {
+type Props = {
   open: boolean;
   handleDrawerClose: () => void;
 };
 
-const NavDrawer: React.FC<PROPS> = (props) => {
+const NavDrawer: React.FC<Props> = (props) => {
   const classes = useStyles();
   const theme = useTheme();
 

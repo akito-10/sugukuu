@@ -23,12 +23,12 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type PROPS = {
+type Props = {
   handleDrawerOpen: () => void;
   getCurrentPosition: () => void;
 };
 
-const AppHeader: React.FC<PROPS> = (props) => {
+const AppHeader: React.FC<Props> = (props) => {
   const classes = useStyles();
 
   return (
