@@ -42,7 +42,6 @@ const App: React.FC = () => {
     );
     rows = await res.json();
     setShops(rows);
-    console.log(rows.rest[count].name);
   };
 
   const handleDrawerOpen = () => {
@@ -54,15 +53,18 @@ const App: React.FC = () => {
   };
 
   const nextShopCard = () => {
-    setCount((prevCount) => {
-      if (count < shops.rest.length - 1) {
+    if (count < shops.rest.length - 1) {
+      setCount((prevCount) => {
         return prevCount + 1;
+      });
+    } else {
+      if (window.confirm("最初の店から探し直す？")) {
+        setCount(0);
       } else {
-        return 0;
+        setShops(null);
+        setCount(0);
       }
-    });
-    console.log(shops.rest[count].name);
-    console.log(count);
+    }
   };
 
   return (
@@ -76,6 +78,7 @@ const App: React.FC = () => {
       <main className={classes.main}>
         {shops && (
           <ShopCard
+            shopsIndex={`${count + 1}/${shops?.rest.length}`}
             shopName={shops?.rest[count].name}
             shopNameKana={shops?.rest[count].name_kana}
             image={shops?.rest[count].image_url.shop_image1}

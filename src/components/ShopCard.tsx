@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 
 type Props = {
+  shopsIndex: string;
   shopName: string;
   shopNameKana: string;
   image: string;
@@ -47,7 +48,11 @@ const ShopCard: React.FC<Props> = (props) => {
 
   return (
     <Card className={classes.root}>
-      <CardHeader title={props.shopName} subheader={props.shopNameKana} />
+      <CardHeader
+        title={props.shopName}
+        subheader={props.shopNameKana}
+        action={props.shopsIndex}
+      />
       <CardMedia
         className={classes.media}
         component="img"
