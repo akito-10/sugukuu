@@ -10,8 +10,12 @@ import {
   Typography,
   Grid,
 } from "@material-ui/core";
+import { getDestPosition } from "../features/positionSlice";
+import { useDispatch } from "react-redux";
 
 type Props = {
+  latitude: number;
+  longitude: number;
   shopsIndex: string;
   shopName: string;
   shopNameKana: string;
@@ -44,6 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const ShopCard: React.FC<Props> = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   return (
     <Card className={classes.root}>
@@ -80,7 +85,19 @@ const ShopCard: React.FC<Props> = (props) => {
           justify="space-around"
           alignItems="center"
         >
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              dispatch(
+                getDestPosition({
+                  destLatitude: props.latitude,
+                  destLongitude: props.longitude,
+                })
+              );
+              console.log(props.longitude);
+            }}
+          >
             この店にする
           </Button>
           <Button

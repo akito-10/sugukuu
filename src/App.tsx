@@ -78,6 +78,8 @@ const App: React.FC = () => {
       <main className={classes.main}>
         {shops && (
           <ShopCard
+            latitude={shops?.rest[count].latitude}
+            longitude={shops?.rest[count].longitude}
             shopsIndex={`${count + 1}/${shops?.rest.length}`}
             shopName={shops?.rest[count].name}
             shopNameKana={shops?.rest[count].name_kana}
