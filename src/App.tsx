@@ -74,14 +74,16 @@ const App: React.FC = () => {
         />
       </header>
       <main className={classes.main}>
-        <ShopCard
-          shopName={shops?.rest[count].name}
-          shopNameKana={shops?.rest[count].name_kana}
-          image={shops?.rest[count].image_url.shop_image1}
-          pr={shops?.rest[count].pr.pr_short}
-          shopUrl={shops?.rest[count].url_mobile}
-          nextShopCard={nextShopCard}
-        />
+        {shops && (
+          <ShopCard
+            shopName={shops?.rest[count].name}
+            shopNameKana={shops?.rest[count].name_kana}
+            image={shops?.rest[count].image_url.shop_image1}
+            pr={shops?.rest[count].pr.pr_short}
+            shopUrl={shops?.rest[count].url_mobile}
+            nextShopCard={nextShopCard}
+          />
+        )}
       </main>
       <nav>
         <NavDrawer open={open} handleDrawerClose={handleDrawerClose} />
