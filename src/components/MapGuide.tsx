@@ -9,7 +9,7 @@ type Position = {
 
 const MapGuide: React.FC = () => {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyCyoyefZRTa_NXNG71t--G4vNi0HRyvHOk",
+    googleMapsApiKey: "APIキー",
   });
   const [currPos, setCurrPos] = useState<Position>();
   let watching_id;
