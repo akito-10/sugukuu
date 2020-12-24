@@ -86,7 +86,7 @@ const ShopCard: React.FC<Props> = (props) => {
           justify="space-around"
           alignItems="center"
         >
-          <Link to="/" className={classes.link}>
+          <Link to="/map" className={classes.link}>
             <Button
               variant="contained"
               color="primary"

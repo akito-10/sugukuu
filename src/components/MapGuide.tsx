@@ -1,110 +1,59 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import {
-  GoogleMap,
-  useLoadScript,
-  DirectionsRenderer,
-  DirectionsService,
-} from "@react-google-maps/api";
-import { useSelector } from "react-redux";
-import { selectPosition } from "../features/positionSlice";
+import React, { useState } from "react";
+import { GoogleMap, useLoadScript } from "@react-google-maps/api";
+import MapContents from "./MapContents";
 
-const mapContainerStyle = {
-  height: "60vh",
-  width: "100%",
-};
-
-const options = {
-  zoomControl: true,
+type Position = {
+  lat: number;
+  lng: number;
 };
 
 const MapGuide: React.FC = () => {
-  const destPos = useSelector(selectPosition);
-  const [currLat, setCurrLat] = useState<number>();
-  const [currLong, setCurrLong] = useState<number>();
-  const [currentDirection, setCurrentDirection] = useState<any>(null);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyCyoyefZRTa_NXNG71t--G4vNi0HRyvHOk",
-    libraries: ["places"],
   });
-  const mapRef = useRef();
-  const onMapLoaded = useCallback((map) => {
-    mapRef.current = map;
-  }, []);
+  const [currPos, setCurrPos] = useState<Position>();
+  let watching_id;
 
-  const origin = { lat: currLat, lng: currLong };
-  const destination = { lat: destPos.destLatitude, lng: destPos.destLongitude };
-
-  let watch_id;
-
-  const watchingPosition = () => {
-    watch_id = navigator.geolocation.watchPosition(
-      getCurrentPosition,
+  const watchingPos = () => {
+    watching_id = navigator.geolocation.watchPosition(
+      getCurrPos,
       (err) => {
         alert(err.message);
       },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 2000 }
     );
   };
-  const getCurrentPosition = (position: any) => {
-    setCurrLat(position.coords.latitude);
-    setCurrLong(position.coords.longitude);
+
+  const getCurrPos = (position: any) => {
+    setCurrPos({
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+    });
   };
 
-  watchingPosition();
-
-  const directionsCallback = useCallback((googleResponse) => {
-    if (googleResponse) {
-      if (currentDirection) {
-        if (
-          googleResponse.status === "OK" &&
-          googleResponse.geocoded_waypoints.length !==
-            currentDirection?.geocoded_waypoints.length
-        ) {
-          console.log("ルートが変更されたのでstateを更新する");
-          setCurrentDirection(googleResponse);
-        } else {
-          console.log("前回と同じルートのためstateを更新しない");
-        }
-      } else {
-        if (googleResponse.status === "OK") {
-          console.log("初めてルートが設定されたため、stateを更新する");
-          setCurrentDirection(googleResponse);
-        } else {
-          console.log("前回と同じルートのためstateを更新しない");
-        }
-      }
-    }
-  }, []);
-
-  // if (loadError) return "Error";
-  // if (!isLoaded) return "Loading...";
-
-  return (
-    <GoogleMap
-      mapContainerStyle={mapContainerStyle}
-      zoom={8}
-      options={options}
-      center={origin}
-      onLoad={onMapLoaded}
-    >
-      <DirectionsService
-        options={{
-          origin: origin,
-          destination: destination,
-          travelMode: "WALKING",
-          optimizeWaypoints: true,
+  const renderMap = () => {
+    return (
+      <GoogleMap
+        mapContainerStyle={{
+          height: "100vh",
+          width: "100%",
         }}
-        callback={directionsCallback}
-      />
-      {currentDirection !== null && (
-        <DirectionsRenderer
-          options={{
-            directions: currentDirection,
-          }}
-        />
-      )}
-    </GoogleMap>
-  );
+        center={(currPos?.lat, currPos?.lng)}
+        zoom={8}
+        onLoad={() => {
+          watchingPos();
+        }}
+      >
+        <MapContents lat={currPos?.lat} lng={currPos?.lng} />
+      </GoogleMap>
+    );
+  };
+
+  if (loadError) {
+    return <div>上手く読み込めませんでした。</div>;
+  }
+
+  return isLoaded ? renderMap() : <div></div>;
 };
 
 export default MapGuide;
