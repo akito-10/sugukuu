@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import { getDestPosition } from "../features/positionSlice";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 type Props = {
   latitude: number;
@@ -85,21 +86,22 @@ const ShopCard: React.FC<Props> = (props) => {
           justify="space-around"
           alignItems="center"
         >
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              dispatch(
-                getDestPosition({
-                  destLatitude: props.latitude,
-                  destLongitude: props.longitude,
-                })
-              );
-              console.log(props.longitude);
-            }}
-          >
-            この店にする
-          </Button>
+          <Link to="/" className={classes.link}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                dispatch(
+                  getDestPosition({
+                    destLatitude: props.latitude,
+                    destLongitude: props.longitude,
+                  })
+                );
+              }}
+            >
+              この店にする
+            </Button>
+          </Link>
           <Button
             variant="contained"
             color="secondary"
