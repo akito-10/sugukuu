@@ -21,7 +21,7 @@ const MapGuide: React.FC = () => {
   const destPos = useSelector(selectPosition);
   const [currLat, setCurrLat] = useState<number>();
   const [currLong, setCurrLong] = useState<number>();
-  const [currentDirection, setCurrentDirection] = useState(null);
+  const [currentDirection, setCurrentDirection] = useState<any>(null);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyCyoyefZRTa_NXNG71t--G4vNi0HRyvHOk",
     libraries: ["places"],
@@ -45,7 +45,7 @@ const MapGuide: React.FC = () => {
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 2000 }
     );
   };
-  const getCurrentPosition = (position) => {
+  const getCurrentPosition = (position: any) => {
     setCurrLat(position.coords.latitude);
     setCurrLong(position.coords.longitude);
   };
@@ -58,7 +58,7 @@ const MapGuide: React.FC = () => {
         if (
           googleResponse.status === "OK" &&
           googleResponse.geocoded_waypoints.length !==
-            currentDirection.geocoded_waypoints.length
+            currentDirection?.geocoded_waypoints.length
         ) {
           console.log("ルートが変更されたのでstateを更新する");
           setCurrentDirection(googleResponse);
