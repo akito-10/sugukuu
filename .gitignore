@@ -10,7 +10,7 @@
 
 # production
 /build
-/MapContents-a.tsx
+MapGuide-a.tsx
 
 # misc
 .DS_Store
