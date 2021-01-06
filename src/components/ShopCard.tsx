@@ -62,6 +62,7 @@ const ShopCard: React.FC<Props> = (props) => {
         className={classes.media}
         component="img"
         src={props.image}
+        height={300}
         title="店の画像"
       />
       <CardContent>
